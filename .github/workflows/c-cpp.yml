@@ -1,0 +1,23 @@
+name: CMAKE Workflow
+
+on:
+  workflow_dispatch: 
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: CMake configure
+      run: |
+        cmake -B build -S .
+    - name: Build
+      run: cmake --build build
+    - name: Run
+      run: ./build/hello-world
