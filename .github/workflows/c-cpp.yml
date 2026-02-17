@@ -20,4 +20,4 @@ jobs:
     - name: Build
       run: cmake --build build
     - name: Run
-      run: ./build/hello-world
+      run: ./build/hello_world
