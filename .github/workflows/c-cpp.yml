@@ -9,8 +9,11 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: ['windows-latest', 'ubuntu-latest']
+      fail-fast: false
+    runs-on: ${{matrix.os}}
 
     steps:
     - uses: actions/checkout@v4
@@ -19,7 +22,11 @@ jobs:
         cmake -B build -S .
     - name: Build
       run: cmake --build build
-    - name: Run
-      run: ./build/hello-world
+    - name: Run on Linux
+      if: runner.os == 'Linux'
+      run: ./build/hello_world
     - name: Script call
-      run: bash script.sh
+      run: bash script.sh 4
+    - name: Run on Linux
+      if: runner.os == 'Windows'
+      run: .\build\hello_world.exe
